@@ -1,0 +1,16 @@
+{
+  "name": "trvlr",
+  "cdn": "https://s3.amazonaws.com/discovery_digitalmedia/trvlr/",
+  "sections": [
+    {
+      "id": "header",
+      "title": "Header",
+      "template": "header.tmpl.html"
+    },
+    {
+      "id": "work",
+      "title": "Work",
+      "template": "work.tmpl.html"
+    }
+  ]
+}

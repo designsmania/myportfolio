@@ -1,0 +1,21 @@
+{
+  "name": "trvlr",
+  "cdn": "https://s3.amazonaws.com/discovery_digitalmedia/trvlr/",
+  "sections": [
+    {
+      "id": "work",
+      "title": "WORK",
+      "template": "work.tmpl.html"
+    },
+    {
+      "id": "about",
+      "title": "ABOUT",
+      "template": "about.tmpl.html"
+    },
+    {
+      "id": "resume",
+      "title": "RESUME",
+      "template": "resume.tmpl.html"
+    }
+  ]
+}
