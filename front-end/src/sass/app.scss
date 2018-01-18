@@ -99,6 +99,10 @@ p a:hover{
     position: relative;
     overflow: hidden;
     background-color: black;
+
+    .contentWrapper {
+       padding-top: 60px;
+    }
 }
 
 header{

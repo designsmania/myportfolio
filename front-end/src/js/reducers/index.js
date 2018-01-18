@@ -11,6 +11,11 @@ const reducer = (state, action) => {
             state,
             name: action.payload
          }
+      case "UPDATE_SECTION":
+         return {
+            state,
+            name: action.payload
+         }
       default:
          return state;
    }

@@ -9,6 +9,12 @@ const actionDispatcher = (func) => (...args) =>  {
    return act;
 }
 
+export const updateSection = (payload) => {
+  action.next({
+    type:"UPDATE_SECTION",
+    payload
+  })
+}
 
 export const updateVideo =  (payload) => {
    action.next({

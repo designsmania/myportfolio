@@ -3,7 +3,7 @@ import { Tracking } from "./tracking";
 export function navigate(obj) {
    if (obj === null) return;
 
-   const url = obj.continent + "/" + obj.id;
+   const url =  obj.id;
 
 
    if (window.history && window.history.pushState) {

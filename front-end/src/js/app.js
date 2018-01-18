@@ -11,8 +11,9 @@ import Header from "./components/header";
 
 class App {
   constructor() {
-    this.container = document.querySelector("#app");
+    this.root = document.querySelector("#app");
     this.store = action;
+    this.section = {};
     this.el = null;
     this.data = null;
     this.consumeData();
@@ -24,9 +25,17 @@ class App {
   consumeData() {
     loadData().subscribe(
       response => {
-        console.log(response)
         this.data = response;
-       this.build();
+
+        this.deepLinkChecker();
+
+        this.store
+            .distinctUntilChanged()
+            .subscribe( (state) => {
+              if (state.type === "UPDATE_SECTION") {
+                this.onSectionChanged(state.payload)
+              }
+            })
       },
       error => {
         console.error(error);
@@ -34,30 +43,58 @@ class App {
     );
   }
 
+  onSectionChanged(state) {
+   // if (this.section )
+
+    if (this.section.id === state.id) return;
+    else this.section = state;
+
+    this.el.innerHTML = "";
+    let component = new Component(state);
+    this.el.innerHTML += component.el;
+    navigate(state)
+
+   }
+
+  deepLinkChecker() {
+    if (window.location.hash) {
+      const url = window.location.hash;
+      const urls = url.substring(url.indexOf('#'))
+                    .replace("#", "")
+                    .split("/")
+                    .filter(it => it.trim() != "");
+      if (urls.length > 0) {
+        // TODO : To refactor repetitive
+        this.render();
+
+      }
+    }else {
+      // TODO : To refactor repetitive
+      this.continents = this.data.sections[0].id || "";
+      this.render();
+
+    }
+  }
 
   animateIn() {
     TweenMax.to(this.el, 0.5, {
       opacity: 1  ,
       onComplete: ()=>{
-        this.build();
+        this.render();
       }
     });
   }
 
 
 
-  build() {
-
-
-    this.render();
-
-  }
-
-
-  render(callback) {
+  render() {
 
     this.header = new Header(this.data.sections);
-    this.container.innerHTML += this.header.el;
+    this.root.innerHTML += this.header.el;
+
+    this.el = document.createElement("div");
+    this.el.setAttribute("class", "contentWrapper");
+    this.root.appendChild(this.el);
 
     // this.data.ui.forEach( ui  => {
     //   console.log(ui)
@@ -66,12 +103,9 @@ class App {
     // });
 
 
-
-
-    if (typeof callback === "function") {
-      callback();
-    }
-
+    setTimeout(()=>{
+      this.header.mounted();
+    },1000);
   }
 
   remove() {
