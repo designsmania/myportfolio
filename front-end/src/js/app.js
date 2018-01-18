@@ -49,10 +49,14 @@ class App {
     if (this.section.id === state.id) return;
     else this.section = state;
 
-    this.el.innerHTML = "";
-    let component = new Component(state);
-    this.el.innerHTML += component.el;
-    navigate(state)
+    this.remove(()=>{
+      let component = new Component(state);
+      this.el.innerHTML += component.el;
+      navigate(state);
+
+      TweenMax.to(this.el, 1, {opacity: 1});
+    })
+
 
    }
 
@@ -95,6 +99,7 @@ class App {
     this.el = document.createElement("div");
     this.el.setAttribute("class", "contentWrapper");
     this.root.appendChild(this.el);
+    TweenMax.set(this.el, {opacity:0});
 
     // this.data.ui.forEach( ui  => {
     //   console.log(ui)
@@ -108,7 +113,14 @@ class App {
     },1000);
   }
 
-  remove() {
+  remove(callback) {
+    TweenMax.to(this.el, 0.5, {opacity: 0, onComplete: ()=>{
+      this.el.innerHTML = "";
+
+      if (typeof callback === "function") {
+        callback();
+      }
+    }});
   }
 }
 

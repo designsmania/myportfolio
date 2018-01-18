@@ -29,7 +29,7 @@ body{
     -moz-osx-font-smoothing: grayscale;
     font-family: 'Roboto', sans-serif;
     font-weight: 500;
-    color: black;
+    color: #fff;
 }
 img{
     width: 100%;
@@ -98,7 +98,6 @@ p a:hover{
     width: 100%;
     position: relative;
     overflow: hidden;
-    background-color: black;
 
     .contentWrapper {
        padding-top: 60px;
