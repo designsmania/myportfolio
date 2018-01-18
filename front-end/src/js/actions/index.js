@@ -16,6 +16,16 @@ export const updateSection = (payload) => {
   })
 }
 
+export const viewProject = (payload) => {
+  action.next({
+    type:"VIEW_PROJECT",
+    payload
+  })
+}
+
+
+
+
 export const updateVideo =  (payload) => {
    action.next({
       type: "UPDATE_VIDEO",

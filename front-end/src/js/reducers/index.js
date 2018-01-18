@@ -16,6 +16,11 @@ const reducer = (state, action) => {
             state,
             name: action.payload
          }
+      case "VIEW_PROJECT":
+         return {
+               state,
+               name: action.payload
+         }
       default:
          return state;
    }

@@ -16,7 +16,7 @@ export const loadData = () => {
          if(req.status === 200) {
             const response = JSON.parse(req.response);
             const data = {
-              "ui": response.ui,
+              "projects": response.projects,
               "sections": response.sections
             }
             

@@ -17,5 +17,13 @@
       "title": "RESUME",
       "template": "resume.tmpl.html"
     }
+  ],
+  "projects": [
+    {
+      "id": "boeing",
+      "title": "THE AGE OF AEROSPACE",
+      "type": "project",
+      "template": "boeing.tmpl.html"
+    }
   ]
 }

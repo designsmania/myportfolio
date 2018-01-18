@@ -3,7 +3,13 @@ import { Tracking } from "./tracking";
 export function navigate(obj) {
    if (obj === null) return;
 
-   const url =  obj.id;
+   let url = "";
+   if (obj.type && obj.type === "project") {
+    url = window.location.hash.substr(1).replace("/", "") + "/" + obj.id;
+   }else {
+    url =  obj.id;
+
+   }
 
 
    if (window.history && window.history.pushState) {

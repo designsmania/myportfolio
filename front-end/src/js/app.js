@@ -2,7 +2,7 @@ import Rx from 'rxjs';
 import TweenMax from 'gsap';
 import Mustache from 'mustache';
 
-import { actionDispatcher, action} from "./actions";
+import { actionDispatcher, action, updateSection} from "./actions";
 import {loadData, getContinent, getVideo, getVideoIndex } from "./data";
 import { navigate }  from "./utils/router";
 import { Tracking } from "./utils/tracking";
@@ -26,16 +26,24 @@ class App {
     loadData().subscribe(
       response => {
         this.data = response;
-
-        this.deepLinkChecker();
-
+        
         this.store
             .distinctUntilChanged()
             .subscribe( (state) => {
               if (state.type === "UPDATE_SECTION") {
                 this.onSectionChanged(state.payload)
               }
+
+              if (state.type === "VIEW_PROJECT") {
+                
+                this.onViewProject(
+                  this.data.projects.filter( it => it.id === state.payload)[0]
+                );
+              }
             })
+
+        this.deepLinkChecker();
+
       },
       error => {
         console.error(error);
@@ -52,12 +60,23 @@ class App {
     this.remove(()=>{
       let component = new Component(state);
       this.el.innerHTML += component.el;
+      component.mounted();
       navigate(state);
 
       TweenMax.to(this.el, 0.3, {opacity: 1, y:0, force3D:true });
     })
 
 
+   }
+
+   onViewProject(project) {
+     let component = new Component(project);
+     this.el.innerHTML += component.el;
+     component.mounted();
+     const projectOverlay = document.querySelector("#project-overlay");
+     TweenMax.set(projectOverlay, {opacity:0, y: 50});
+     TweenMax.to(projectOverlay, 0.25, {opacity: 1, y:0, force3D:true });
+    navigate(project)
    }
 
   deepLinkChecker() {
@@ -69,13 +88,16 @@ class App {
                     .filter(it => it.trim() != "");
       if (urls.length > 0) {
         // TODO : To refactor repetitive
-        this.render();
 
+        this.render();
+        updateSection(
+          this.data.sections.filter( it => it.id === urls[0])[0]
+        )
       }
     }else {
       // TODO : To refactor repetitive
-      this.continents = this.data.sections[0].id || "";
       this.render();
+      updateSection(this.data.sections[0])
 
     }
   }
@@ -101,6 +123,7 @@ class App {
     this.root.appendChild(this.el);
     TweenMax.set(this.el, {opacity:0, y: 50});
 
+
     // this.data.ui.forEach( ui  => {
     //   console.log(ui)
     //   let component = new Component(ui);
@@ -110,7 +133,8 @@ class App {
 
     setTimeout(()=>{
       this.header.mounted();
-    },1000);
+
+    },500);
   }
 
   remove(callback) {

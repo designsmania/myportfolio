@@ -22,8 +22,6 @@ class Header  {
       it.addEventListener("click", this.onUpdate.bind(this), false);
     });
 
-    updateSection(this.data.sections.filter( it => it.id === "work")[0]);
-
   }
 
   onUpdate(e) {

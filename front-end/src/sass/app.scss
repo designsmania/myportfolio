@@ -101,13 +101,23 @@ p a:hover{
 
     .contentWrapper {
        padding-top: 60px;
+
+       #project-overlay {
+            background-color: #fff;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+        }
     }
+
+
 }
 
 .component {
     background-color: #295e7b;
     h2 {
-        
+
     }
 }
 
