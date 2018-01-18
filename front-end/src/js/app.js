@@ -54,7 +54,7 @@ class App {
       this.el.innerHTML += component.el;
       navigate(state);
 
-      TweenMax.to(this.el, 1, {opacity: 1});
+      TweenMax.to(this.el, 0.3, {opacity: 1, y:0, force3D:true });
     })
 
 
@@ -99,7 +99,7 @@ class App {
     this.el = document.createElement("div");
     this.el.setAttribute("class", "contentWrapper");
     this.root.appendChild(this.el);
-    TweenMax.set(this.el, {opacity:0});
+    TweenMax.set(this.el, {opacity:0, y: 50});
 
     // this.data.ui.forEach( ui  => {
     //   console.log(ui)
@@ -114,7 +114,7 @@ class App {
   }
 
   remove(callback) {
-    TweenMax.to(this.el, 0.5, {opacity: 0, onComplete: ()=>{
+    TweenMax.to(this.el, 0.5, {opacity: 0, y:50,force3D:true, onComplete: ()=>{
       this.el.innerHTML = "";
 
       if (typeof callback === "function") {

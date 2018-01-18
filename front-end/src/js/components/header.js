@@ -21,6 +21,9 @@ class Header  {
     this.navs.forEach(it => {
       it.addEventListener("click", this.onUpdate.bind(this), false);
     });
+
+    updateSection(this.data.sections.filter( it => it.id === "work")[0]);
+
   }
 
   onUpdate(e) {
@@ -28,7 +31,7 @@ class Header  {
     const target = e.currentTarget;
     const payload = this.data.sections.filter( it => it.id === target.id)[0];
     updateSection(payload)
-  }
+  }    
 }
 
 
